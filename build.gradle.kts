@@ -23,6 +23,9 @@ tasks.named<org.springframework.boot.gradle.tasks.run.BootRun>("bootRun") {
 
 dependencies {
     implementation(libs.spring.boot.starter.web)
+    implementation(libs.springdoc.openapi.ui)
+
+    testImplementation(libs.spring.boot.starter.test)
 }
 
 tasks.test {
