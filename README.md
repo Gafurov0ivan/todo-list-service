@@ -68,7 +68,7 @@ Prerequisites: Java 21 must be installed
 Prerequisites: Java 21 must be installed
 
    ```bash
-     ./gradlew test --tests com.gafur.todo.api.integration.TodoItemIntegrationTest
+     ./gradlew test --tests com.gafur.todo.api.controller.TodoItemIntegrationTest
    ```
 
 ## API Swagger docs:
