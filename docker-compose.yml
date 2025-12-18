@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  todo-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: todo-service
+    ports:
+      - "8080:8080"
