@@ -17,6 +17,8 @@ import org.springframework.web.context.request.WebRequest;
 @ControllerAdvice
 public class RestExceptionHandler {
 
+  private static final String VALIDATION_ERROR = "VALIDATION_ERROR";
+
   @ExceptionHandler(
       value = {
         UpdateOperationNotAllowedException.class,
@@ -29,17 +31,26 @@ public class RestExceptionHandler {
     return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
   }
 
-  @ExceptionHandler(
-      value = {
-        MethodArgumentNotValidException.class,
-        HttpMessageNotReadableException.class,
-        IllegalStatusException.class
-      })
+  @ExceptionHandler(value = {HttpMessageNotReadableException.class, IllegalStatusException.class})
   protected ResponseEntity<ErrorResponse> handleValidationFailed(
       Exception exception, WebRequest request) {
-    var errorType = "VALIDATION_ERROR";
-    log.warn("{}: {}", errorType, exception.getMessage(), exception);
-    var errorResponse = new ErrorResponse(errorType, exception.getMessage());
+    log.warn("{}: {}", VALIDATION_ERROR, exception.getMessage(), exception);
+    var errorResponse = new ErrorResponse(VALIDATION_ERROR, exception.getMessage());
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+  }
+
+  @ExceptionHandler(value = {MethodArgumentNotValidException.class})
+  protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValid(
+      MethodArgumentNotValidException exception, WebRequest request) {
+
+    String errorMessage =
+        exception.getBindingResult().getFieldErrors().stream()
+            .map(error -> error.getField() + ": " + error.getDefaultMessage())
+            .findFirst()
+            .orElse(VALIDATION_ERROR);
+
+    log.warn("{}: {}", VALIDATION_ERROR, errorMessage);
+    var errorResponse = new ErrorResponse(VALIDATION_ERROR, errorMessage);
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
   }
 

@@ -73,6 +73,7 @@ Prerequisites: Java 21 must be installed
 
 ## API Swagger docs:
 
+When creating the todo item, please use due date in the future.
 http://localhost:8080/swagger-ui/index.html
 
 ## Security Note

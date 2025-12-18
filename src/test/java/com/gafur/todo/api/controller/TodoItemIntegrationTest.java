@@ -89,6 +89,7 @@ public class TodoItemIntegrationTest {
             .getResponse()
             .getContentAsString();
 
+    assertTrue(errorMessage.contains("VALIDATION_ERROR"));
     assertTrue(errorMessage.contains("Due date must not be in the past"));
   }
 
