@@ -17,7 +17,12 @@ repositories {
     mavenCentral()
 }
 
+tasks.named<org.springframework.boot.gradle.tasks.run.BootRun>("bootRun") {
+    mainClass.set("com.gafur.todo.Application")
+}
+
 dependencies {
+    implementation(libs.spring.boot.starter.web)
 }
 
 tasks.test {
