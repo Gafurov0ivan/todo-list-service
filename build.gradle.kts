@@ -23,8 +23,21 @@ tasks.named<org.springframework.boot.gradle.tasks.run.BootRun>("bootRun") {
 
 dependencies {
     implementation(libs.spring.boot.starter.web)
+    implementation(libs.spring.boot.starter.data.jpa)
+    implementation(libs.spring.boot.starter.validation)
     implementation(libs.springdoc.openapi.ui)
 
+    compileOnly(libs.lombok)
+    implementation(libs.mapstruct)
+
+    annotationProcessor(libs.lombok)
+    annotationProcessor(libs.mapstruct.processor)
+
+    runtimeOnly(libs.h2.database)
+
+    testCompileOnly(libs.lombok)
+    testAnnotationProcessor(libs.lombok)
+    testAnnotationProcessor(libs.mapstruct.processor)
     testImplementation(libs.spring.boot.starter.test)
 }
 
